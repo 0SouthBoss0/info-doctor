@@ -28,16 +28,16 @@ class PatientController extends Controller
         $query = Patient::query();
 
         if ($firstName) {
-            $query->where('first_name', $firstName); 
+            $query->where('first_name', $firstName);
         }
         if ($lastName) {
-            $query->where('last_name', $lastName); 
+            $query->where('last_name', $lastName);
         }
         if ($middleName) {
-            $query->where('middle_name', $middleName); 
+            $query->where('middle_name', $middleName);
         }
         if ($age) {
-            $query->where('age', $age); 
+            $query->where('age', $age);
         }
 
         $patients = $query->get();
@@ -45,7 +45,7 @@ class PatientController extends Controller
 
     }
 
-public function addMedicalHistory(Request $request, $id)
+    public function addMedicalHistory(Request $request, $id)
     {
 
         $patient = Patient::find($id);
@@ -60,7 +60,7 @@ public function addMedicalHistory(Request $request, $id)
             return response()->json(['message' => 'Medical history data is required'], 400);
         }
 
-        $currentMedicalHistory = $patient->medical_history ?? ''; 
+        $currentMedicalHistory = $patient->medical_history ?? '';
         $updatedMedicalHistory = $currentMedicalHistory . "\n" . $newMedicalHistory;
 
         $patient->medical_history = $updatedMedicalHistory;
@@ -73,7 +73,7 @@ public function addMedicalHistory(Request $request, $id)
         ], 200);
     }
 
-public function store(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'first_name' => 'required|string|max:255',
