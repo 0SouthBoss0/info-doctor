@@ -73,4 +73,28 @@ public function addMedicalHistory(Request $request, $id)
         ], 200);
     }
 
+public function store(Request $request)
+    {
+        $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'age' => 'required|integer|min:0',
+            'medical_history' => 'nullable|string',
+        ]);
+
+        $patient = Patient::create([
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'middle_name' => $request->input('middle_name'),
+            'age' => $request->input('age'),
+            'medical_history' => $request->input('medical_history'),
+        ]);
+
+        return response()->json([
+            'message' => 'Patient created successfully',
+            'patient' => $patient
+        ], 201);
+    }
+
 }
