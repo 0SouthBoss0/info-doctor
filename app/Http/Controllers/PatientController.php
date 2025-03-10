@@ -43,6 +43,34 @@ class PatientController extends Controller
         $patients = $query->get();
         return response()->json($patients);
 
-
     }
+
+public function addMedicalHistory(Request $request, $id)
+    {
+
+        $patient = Patient::find($id);
+
+        if (!$patient) {
+            return response()->json(['message' => 'Patient not found'], 404);
+        }
+
+        $newMedicalHistory = $request->input('medical_history');
+
+        if (empty($newMedicalHistory)) {
+            return response()->json(['message' => 'Medical history data is required'], 400);
+        }
+
+        $currentMedicalHistory = $patient->medical_history ?? ''; 
+        $updatedMedicalHistory = $currentMedicalHistory . "\n" . $newMedicalHistory;
+
+        $patient->medical_history = $updatedMedicalHistory;
+        $patient->updated_at = now();
+        $patient->save();
+
+        return response()->json([
+            'message' => 'Medical history updated successfully',
+            'patient' => $patient
+        ], 200);
+    }
+
 }
