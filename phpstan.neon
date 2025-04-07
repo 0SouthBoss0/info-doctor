@@ -1,11 +1,37 @@
 includes:
-    - vendor/phpstan/phpstan/conf/bleedingEdge.neon
+    - ./vendor/larastan/larastan/extension.neon
 
 parameters:
-    level: 5
     paths:
         - app
         - config
         - database
         - routes
         - tests
+
+    level: 5
+
+    ignoreErrors:
+        - '#Unsafe usage of new static#'
+        - '#Parameter \#.* \$.* of method .*::.*\(\) expects .* given.#'
+        - '#Call to an undefined method .*::.*\(\)#'
+
+    noUnnecessaryCollectionCall: true
+    reportUnmatchedIgnoredErrors: false
+
+    universalObjectCratesClasses:
+        - Illuminate\Support\Collection
+        - Illuminate\Database\Eloquent\Collection
+        - Illuminate\View\View
+        - Illuminate\Http\Request
+        - Illuminate\Session\Store
+
+    excludePaths:
+        - ./database/migrations/
+        - ./storage/
+        - ./bootstrap/cache/
+        - ./vendor/
+        - ./node_modules/
+
+    inferPrivatePropertyTypeFromConstructor: true
+    treatPhpDocTypesAsCertain: true

@@ -11,7 +11,7 @@ class PatientController extends Controller
     {
         $patient = Patient::find($id);
 
-        if (!$patient) {
+        if (! $patient) {
             return response()->json(['message' => 'Patient not found'], 404);
         }
 
@@ -41,6 +41,7 @@ class PatientController extends Controller
         }
 
         $patients = $query->get();
+
         return response()->json($patients);
 
     }
@@ -50,7 +51,7 @@ class PatientController extends Controller
 
         $patient = Patient::find($id);
 
-        if (!$patient) {
+        if (! $patient) {
             return response()->json(['message' => 'Patient not found'], 404);
         }
 
@@ -61,7 +62,7 @@ class PatientController extends Controller
         }
 
         $currentMedicalHistory = $patient->medical_history ?? '';
-        $updatedMedicalHistory = $currentMedicalHistory . "\n" . $newMedicalHistory;
+        $updatedMedicalHistory = $currentMedicalHistory."\n".$newMedicalHistory;
 
         $patient->medical_history = $updatedMedicalHistory;
         $patient->updated_at = now();
@@ -69,7 +70,7 @@ class PatientController extends Controller
 
         return response()->json([
             'message' => 'Medical history updated successfully',
-            'patient' => $patient
+            'patient' => $patient,
         ], 200);
     }
 
@@ -93,8 +94,7 @@ class PatientController extends Controller
 
         return response()->json([
             'message' => 'Patient created successfully',
-            'patient' => $patient
+            'patient' => $patient,
         ], 201);
     }
-
 }
