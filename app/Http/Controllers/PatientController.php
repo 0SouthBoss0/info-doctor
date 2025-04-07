@@ -11,11 +11,21 @@ class PatientController extends Controller
     {
         $patient = Patient::find($id);
 
-        if (! $patient) {
-            return response()->json(['message' => 'Patient not found'], 404);
+        if (!$patient) {
+            return response()->json([
+                'data' => null,
+                'errors' => [
+                    [
+                        'code' => 'PATIENT_NOT_FOUND',
+                        'message' => 'Patient not found',
+                    ]
+                ]
+            ], 404);
         }
 
-        return response()->json($patient);
+        return response()->json([
+            'data' => $patient
+        ]);
     }
 
     public function search(Request $request)
@@ -42,23 +52,39 @@ class PatientController extends Controller
 
         $patients = $query->get();
 
-        return response()->json($patients);
-
+        return response()->json([
+            'data' => $patients->isEmpty() ? null : $patients->toArray()
+        ]);
     }
 
     public function addMedicalHistory(Request $request, $id)
     {
-
         $patient = Patient::find($id);
 
-        if (! $patient) {
-            return response()->json(['message' => 'Patient not found'], 404);
+        if (!$patient) {
+            return response()->json([
+                'data' => null,
+                'errors' => [
+                    [
+                        'code' => 'PATIENT_NOT_FOUND',
+                        'message' => 'Patient not found',
+                    ]
+                ]
+            ], 404);
         }
 
         $newMedicalHistory = $request->input('medical_history');
 
         if (empty($newMedicalHistory)) {
-            return response()->json(['message' => 'Medical history data is required'], 400);
+            return response()->json([
+                'data' => null,
+                'errors' => [
+                    [
+                        'code' => 'MEDICAL_HISTORY_REQUIRED',
+                        'message' => 'Medical history data is required',
+                    ]
+                ]
+            ], 400);
         }
 
         $currentMedicalHistory = $patient->medical_history ?? '';
@@ -69,9 +95,8 @@ class PatientController extends Controller
         $patient->save();
 
         return response()->json([
-            'message' => 'Medical history updated successfully',
-            'patient' => $patient,
-        ], 200);
+            'data' => $patient
+        ]);
     }
 
     public function store(Request $request)
@@ -93,8 +118,7 @@ class PatientController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'Patient created successfully',
-            'patient' => $patient,
+            'data' => $patient
         ], 201);
     }
 }
