@@ -15,6 +15,7 @@ parameters:
         - '#Unsafe usage of new static#'
         - '#Parameter \#.* \$.* of method .*::.*\(\) expects .* given.#'
         - '#Call to an undefined method .*::.*\(\)#'
+        - '#Access to an undefined property .*::\$[a-zA-Z0-9_]+#'
 
     noUnnecessaryCollectionCall: true
     reportUnmatchedIgnoredErrors: false

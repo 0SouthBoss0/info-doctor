@@ -11,20 +11,20 @@ class PatientController extends Controller
     {
         $patient = Patient::find($id);
 
-        if (!$patient) {
+        if (! $patient) {
             return response()->json([
                 'data' => null,
                 'errors' => [
                     [
                         'code' => 'PATIENT_NOT_FOUND',
                         'message' => 'Patient not found',
-                    ]
-                ]
+                    ],
+                ],
             ], 404);
         }
 
         return response()->json([
-            'data' => $patient
+            'data' => $patient,
         ]);
     }
 
@@ -53,7 +53,7 @@ class PatientController extends Controller
         $patients = $query->get();
 
         return response()->json([
-            'data' => $patients->isEmpty() ? null : $patients->toArray()
+            'data' => $patients->isEmpty() ? null : $patients->toArray(),
         ]);
     }
 
@@ -61,15 +61,15 @@ class PatientController extends Controller
     {
         $patient = Patient::find($id);
 
-        if (!$patient) {
+        if (! $patient) {
             return response()->json([
                 'data' => null,
                 'errors' => [
                     [
                         'code' => 'PATIENT_NOT_FOUND',
                         'message' => 'Patient not found',
-                    ]
-                ]
+                    ],
+                ],
             ], 404);
         }
 
@@ -82,8 +82,8 @@ class PatientController extends Controller
                     [
                         'code' => 'MEDICAL_HISTORY_REQUIRED',
                         'message' => 'Medical history data is required',
-                    ]
-                ]
+                    ],
+                ],
             ], 400);
         }
 
@@ -95,7 +95,7 @@ class PatientController extends Controller
         $patient->save();
 
         return response()->json([
-            'data' => $patient
+            'data' => $patient,
         ]);
     }
 
@@ -118,7 +118,7 @@ class PatientController extends Controller
         ]);
 
         return response()->json([
-            'data' => $patient
+            'data' => $patient,
         ], 201);
     }
 }
