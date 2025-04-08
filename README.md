@@ -17,6 +17,7 @@ RESTful API для управления медицинскими картами 
 ```bash
 git clone https://github.com/0SouthBoss0/info-doctor.git
 cd info-doctor
+git config core.hooksPath .githooks/
 composer install
 cp .env.example .env
 php artisan key:generate
