@@ -6,7 +6,6 @@ use App\Models\Patient;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-
 class PatientControllerTest extends TestCase
 {
     use RefreshDatabase;
